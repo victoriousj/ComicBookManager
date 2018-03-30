@@ -183,18 +183,18 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         /// <param name="comicBook">The comic book to validate.</param>
         private void ValidateComicBook(ComicBook comicBook)
         {
-            //// If there aren't any "SeriesId" and "IssueNumber" field validation errors...
-            //if (ModelState.IsValidField("ComicBook.SeriesId") &&
-            //    ModelState.IsValidField("ComicBook.IssueNumber"))
-            //{
-            //    // Then make sure that the provided issue number is unique for the provided series.
-            //    // TODO Call method to check if the issue number is available for this comic book.
-            //    if (false)
-            //    {
-            //        ModelState.AddModelError("ComicBook.IssueNumber",
-            //            "The provided Issue Number has already been entered for the selected Series.");
-            //    }
-            //}
+            // If there aren't any "SeriesId" and "IssueNumber" field validation errors...
+            if (ModelState.IsValidField("ComicBook.SeriesId") &&
+                ModelState.IsValidField("ComicBook.IssueNumber"))
+            {
+                // Then make sure that the provided issue number is unique for the provided series.
+                // TODO Call method to check if the issue number is available for this comic book.
+                if (_context.ComicBooks.Any(c => c.Id != comicBook.Id && c.SeriesId == comicBook.SeriesId && c.IssueNumber == comicBook.IssueNumber))
+                {
+                    ModelState.AddModelError("ComicBook.IssueNumber",
+                        "The provided Issue Number has already been entered for the selected Series.");
+                }
+            }
         }
 
         private bool _disposed = false;
