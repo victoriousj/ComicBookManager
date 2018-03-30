@@ -10,6 +10,7 @@ namespace ComicBookShared.Data
     public class Context : DbContext
     {
         public DbSet<ComicBook> ComicBooks { get; set; }
+        public DbSet<ComicBookArtist> ComicbookArtist { get; set; }
         public DbSet<Series> Series { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Role> Roles { get; set; }
