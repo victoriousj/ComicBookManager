@@ -156,7 +156,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
 
             // TODO Get the comic book.
             // Include the "Series" navigation property.
-            var comicBook = new ComicBook();
+            var comicBook = _context.ComicBooks.Where(c => c.Id == id);
 
             if (comicBook == null)
             {
@@ -169,7 +169,9 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            // TODO Delete the comic book.
+            var comicBook = new ComicBook { Id = id };
+            _context.Entry(comicBook).State = EntityState.Deleted;
+            _context.SaveChanges();
 
             TempData["Message"] = "Your comic book was successfully deleted!";
 
