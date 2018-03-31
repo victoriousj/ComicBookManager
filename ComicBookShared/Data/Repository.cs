@@ -18,32 +18,6 @@ namespace ComicBookShared.Data
             _context = context;
         }
 
-        public IList<ComicBook> GetComicBooks()
-        {
-            return _context.ComicBooks
-                    .Include(cb => cb.Series)
-                    .OrderBy(cb => cb.Series.Title)
-                    .ThenBy(cb => cb.IssueNumber)
-                    .ToList();
-        }
-
-        public ComicBook GetComicBookArtist(int comicBookId)
-        {
-            return _context.ComicBooks
-                .Include(c => c.Series)
-                .Where(c => c.Id == comicBookId)
-                .FirstOrDefault();
-        }
-
-        public ComicBook GetComicBook(int? id)
-        {
-            return _context.ComicBooks
-                .Include(cb => cb.Series)
-                .Include(cb => cb.Artists.Select(a => a.Artist))
-                .Include(cb => cb.Artists.Select(a => a.Role))
-                .Where(cb => cb.Id == id.Value)
-                .SingleOrDefault();
-        }
 
         public IEnumerable GetSeries()
         {
@@ -56,28 +30,9 @@ namespace ComicBookShared.Data
             _context.SaveChanges();
         }
 
-        public void SaveComicBook(ComicBook comicBook)
-        {
-            _context.ComicBooks.Add(comicBook);
-            _context.SaveChanges();
-        }
-
         public IEnumerable GetRoles()
         {
             return _context.Roles.OrderBy(r => r.Name).ToList();
-        }
-
-        public void UpdatecomicBook(ComicBook comicBook)
-        {
-
-            _context.Entry(comicBook).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void DeletComicBook(ComicBook comicBook)
-        {
-            _context.Entry(comicBook).State = EntityState.Deleted;
-            _context.SaveChanges();
         }
 
         public IList<Artist> GetArtists()
@@ -90,5 +45,13 @@ namespace ComicBookShared.Data
             _context.Entry(comicBookArtist).State = EntityState.Deleted;
             _context.SaveChanges();
         }
-    }
+
+		public ComicBook GetComicBookArtist(int comicBookId)
+		{
+			return _context.ComicBooks
+				.Include(c => c.Series)
+				.Where(c => c.Id == comicBookId)
+				.FirstOrDefault();
+		}
+	}
 }
