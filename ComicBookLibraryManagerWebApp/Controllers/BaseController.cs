@@ -1,13 +1,9 @@
 ﻿using ComicBookShared.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ComicBookLibraryManagerWebApp.Controllers
 {
-    public abstract class BaseController : Controller
+	public abstract class BaseController : Controller
     {
         protected Context Context { get; set; }
         private bool _disposed = false;

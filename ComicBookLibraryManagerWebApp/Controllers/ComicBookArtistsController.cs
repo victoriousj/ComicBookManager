@@ -6,9 +6,6 @@ using System.Web.Mvc;
 
 namespace ComicBookLibraryManagerWebApp.Controllers
 {
-    /// <summary>
-    /// Controller for adding/deleting comic book artists.
-    /// </summary>
     public class ComicBookArtistsController : BaseController
     {
 		private ComicBookRepository _comicBookRepository = null;

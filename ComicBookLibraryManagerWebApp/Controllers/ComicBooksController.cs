@@ -1,21 +1,13 @@
 ﻿using ComicBookShared.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
 using ComicBookLibraryManagerWebApp.ViewModels;
 using System.Net;
-using System.Data.Entity.Infrastructure;
 using ComicBookShared.Data;
 
 namespace ComicBookLibraryManagerWebApp.Controllers
 {
-    /// <summary>
-    /// Controller for the "Comic Books" section of the website.
-    /// </summary>
-    public class ComicBooksController : BaseController
+	public class ComicBooksController : BaseController
     {
 		private ComicBookRepository _comicBookRepository = null;
 

@@ -8,9 +8,6 @@ using System.Web.Mvc;
 
 namespace ComicBookLibraryManagerWebApp.Controllers
 {
-    /// <summary>
-    /// Controller for the "Series" section of the website.
-    /// </summary>
     public class SeriesController : Controller
     {
         public ActionResult Index()
