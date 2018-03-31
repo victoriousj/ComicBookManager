@@ -1,8 +1,6 @@
 ﻿using ComicBookLibraryManagerWebApp.ViewModels;
 using ComicBookShared.Data;
 using ComicBookShared.Models;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -13,12 +11,19 @@ namespace ComicBookLibraryManagerWebApp.Controllers
     /// </summary>
     public class ComicBookArtistsController : BaseController
     {
+		private ComicBookRepository _comicBookRepository = null;
+		private ComicBookArtistRepository _comicBookArtistRepository = null;
 
+		public ComicBookArtistsController()
+		{
+			_comicBookRepository = new ComicBookRepository(Context);
+			_comicBookArtistRepository = new ComicBookArtistRepository(Context);
+		}
 
         public ActionResult Add(int comicBookId)
         {
 
-            var comicBook = Repository.GetComicBookArtist(comicBookId);
+            var comicBook = _comicBookArtistRepository.Get(comicBookId);
 
             if (comicBook == null)
             {
@@ -42,7 +47,6 @@ namespace ComicBookLibraryManagerWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                // TODO Add the comic book artist.
                 var comicBookArtist = new ComicBookArtist
                 {
                     ComicBookId = viewModel.ComicBookId,
@@ -50,14 +54,14 @@ namespace ComicBookLibraryManagerWebApp.Controllers
                     RoleId = viewModel.RoleId,
                 };
 
-                Repository.SaveComicBookArtist(comicBookArtist);
+                _comicBookArtistRepository.Add(comicBookArtist);
 
                 TempData["Message"] = "Your artist was successfully added!";
 
                 return RedirectToAction("Detail", "ComicBooks", new { id = viewModel.ComicBookId });
             }
 
-            viewModel.ComicBook = Repository.GetComicBook(viewModel.ComicBookId);
+            viewModel.ComicBook = _comicBookRepository.Get(viewModel.ComicBookId);
 
             viewModel.Init(Repository);
 
@@ -71,7 +75,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var comicBookArtist = Repository.GetComicBookArtist(id.Value);
+            var comicBookArtist = _comicBookArtistRepository.Get(id.Value);
 
             if (comicBookArtist == null)
             {
@@ -86,21 +90,15 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         {
             var comicBookArtist = new ComicBookArtist { Id = id };
 
-            Repository.DeleteComicBookArtist(comicBookArtist);
+            _comicBookArtistRepository.Delete(comicBookArtist);
 
             TempData["Message"] = "Your artist was successfully deleted!";
 
             return RedirectToAction("Detail", "ComicBooks", new { id = comicBookId });
         }
 
-        /// <summary>
-        /// Validates a comic book artist on the server
-        /// before adding a new record.
-        /// </summary>
-        /// <param name="viewModel">The view model containing the values to validate.</param>
         private void ValidateComicBookArtist(ComicBookArtistsAddViewModel viewModel)
         {
-            // If there aren't any "ArtistId" and "RoleId" field validation errors...
             if (ModelState.IsValidField("ArtistId") &&
                 ModelState.IsValidField("RoleId"))
             {
