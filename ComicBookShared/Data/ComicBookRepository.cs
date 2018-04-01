@@ -5,57 +5,31 @@ using System.Data.Entity;
 
 namespace ComicBookShared.Data
 {
-	public class ComicBookRepository
+	public class ComicBookRepository: BaseRepository<ComicBook>
 	{
-		private Context _context = null;
-
-		public ComicBookRepository()
+		public ComicBookRepository(Context context) : base(context)
 		{
-			_context = new Context();
-		}
-
-		public ComicBookRepository(Context context)
-		{
-			_context = context;
+			Context = Context;
 		}
 
 
-		public IList<ComicBook> GetList()
+		public  override IList<ComicBook> GetList()
 		{
-			return _context.ComicBooks
+			return Context.ComicBooks
 					.Include(cb => cb.Series)
 					.OrderBy(cb => cb.Series.Title)
 					.ThenBy(cb => cb.IssueNumber)
 					.ToList();
 		}
 
-		public ComicBook Get(int? id)
+		public override ComicBook Get(int id, bool includeRelatedEntities)
 		{
-			return _context.ComicBooks
+			return Context.ComicBooks
 				.Include(cb => cb.Series)
 				.Include(cb => cb.Artists.Select(a => a.Artist))
 				.Include(cb => cb.Artists.Select(a => a.Role))
-				.Where(cb => cb.Id == id.Value)
+				.Where(cb => cb.Id == id)
 				.SingleOrDefault();
-		}
-
-		public void Add(ComicBook comicBook)
-		{
-			_context.ComicBooks.Add(comicBook);
-			_context.SaveChanges();
-		}
-
-		public void Update(ComicBook comicBook)
-		{
-
-			_context.Entry(comicBook).State = EntityState.Modified;
-			_context.SaveChanges();
-		}
-
-		public void Delete(ComicBook comicBook)
-		{
-			_context.Entry(comicBook).State = EntityState.Deleted;
-			_context.SaveChanges();
 		}
 	}
 }

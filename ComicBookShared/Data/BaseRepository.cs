@@ -10,7 +10,7 @@ namespace ComicBookShared.Data
 	public abstract class BaseRepository<TEntity>
 		where TEntity : class
 	{
-		protected Context Context { get; private set; }
+		public Context Context { get; set; }
 
 		public BaseRepository(Context context)
 		{
@@ -39,6 +39,5 @@ namespace ComicBookShared.Data
 			set.Remove(entity);
 			Context.SaveChanges();
 		}
-\
 	}
 }
