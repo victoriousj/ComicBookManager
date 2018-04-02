@@ -1,9 +1,7 @@
 ﻿using ComicBookShared.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ComicBookLibraryManagerWebApp.Controllers
@@ -91,7 +89,6 @@ namespace ComicBookLibraryManagerWebApp.Controllers
             if (ModelState.IsValid)
             {
                 // TODO Update the series.
-
                 TempData["Message"] = "Your series was successfully updated!";
 
                 return RedirectToAction("Detail", new { id = series.Id });
@@ -122,30 +119,13 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         public ActionResult Delete(int id)
         {
             // TODO Delete the series.
-
             TempData["Message"] = "Your series was successfully deleted!";
 
             return RedirectToAction("Index");
         }
 
-        /// <summary>
-        /// Validates a series on the server
-        /// before adding a new record or updating an existing record.
-        /// </summary>
-        /// <param name="series">The series to validate.</param>
         private void ValidateSeries(Series series)
         {
-            //// If there aren't any "Title" field validation errors...
-            //if (ModelState.IsValidField("Title"))
-            //{
-            //    // Then make sure that the provided title is unique.
-            //    // TODO Call method to check if the title is available.
-            //    if (false)
-            //    {
-            //        ModelState.AddModelError("Title",
-            //            "The provided Title is in use by another series.");
-            //    }
-            //}
         }
     }
 }
