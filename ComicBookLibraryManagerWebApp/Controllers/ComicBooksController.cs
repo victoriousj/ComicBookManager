@@ -11,7 +11,10 @@ namespace ComicBookLibraryManagerWebApp.Controllers
     {
 		private ComicBookRepository _comicBookRepository = null;
 
-		public ComicBooksController() => _comicBookRepository = new ComicBookRepository(Context);
+        public ComicBooksController()
+        {
+            _comicBookRepository = new ComicBookRepository(Context);
+        }
 
 		public ActionResult Index()
         {
@@ -20,7 +23,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
             return View(comicBooks);
         }
 
-        public ActionResult Detail(int? id)
+        public ActionResult Detail(int id)
         {
             if (id == null)
             {
@@ -69,7 +72,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -113,7 +116,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -131,11 +134,11 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            var comicBook = new ComicBook { Id = id };
+            var comicBook = new ComicBook { Id = id.Value };
 
-            _comicBookRepository.Delete(comicBook);
+            _comicBookRepository.Delete(comicBook.Id);
 
             TempData["Message"] = "Your comic book was successfully deleted!";
 

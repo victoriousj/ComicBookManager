@@ -13,7 +13,7 @@ namespace ComicBookShared.Data
 		}
 
 
-		public  override IList<ComicBook> GetList()
+		public override IList<ComicBook> GetList()
 		{
 			return Context.ComicBooks
 					.Include(cb => cb.Series)
@@ -22,7 +22,7 @@ namespace ComicBookShared.Data
 					.ToList();
 		}
 
-		public override ComicBook Get(int id, bool includeRelatedEntities)
+		public override ComicBook Get(int id, bool includeRelatedEntities = true)
 		{
 			return Context.ComicBooks
 				.Include(cb => cb.Series)

@@ -20,7 +20,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         public ActionResult Add(int comicBookId)
         {
 
-            var comicBook = _comicBookArtistRepository.Get(comicBookId);
+            var comicBook = _comicBookRepository.Get(comicBookId);
 
             if (comicBook == null)
             {
@@ -87,7 +87,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
         {
             var comicBookArtist = new ComicBookArtist { Id = id };
 
-            _comicBookArtistRepository.Delete(comicBookArtist);
+            _comicBookArtistRepository.Delete(comicBookArtist.Id);
 
             TempData["Message"] = "Your artist was successfully deleted!";
 
